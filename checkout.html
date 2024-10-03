@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Checkout</h1>
+        </header>
+        <main>
+            <h2>Your Cart</h2>
+            <div id="cartList" class="product-list"></div>
+            <button id="purchaseBtn">Complete Purchase</button>
+        </main>
+    </div>
+
+    <script src="products.js"></script>
+    <script src="script1.js"></script>
+    <script>
+        function displayCart() {
+            const cartList = document.getElementById('cartList');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartList.innerHTML = '';
+            
+            cart.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                
+                productDiv.innerHTML = `
+                    <img src="${product.img}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$${product.price.toFixed(2)}</p>
+                `;
+                
+                cartList.appendChild(productDiv);
+            });
+        }
+
+        document.getElementById('purchaseBtn').addEventListener('click', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length > 0) {
+                alert('Thank you for your purchase!');
+                localStorage.removeItem('cart'); // Clear cart after purchase
+                window.location.href = 'index1.html'; // Redirect to home
+            } else {
+                alert('Your cart is empty!');
+            }
+        });
+
+        // Display cart contents on page load
+        displayCart();
+    </script>
+</body>
+</html>
